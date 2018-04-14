@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <kcpolydb.h>
 #include "util/histogram.h"
 #include "util/random.h"
@@ -438,6 +439,12 @@ class Benchmark {
 }
 
   void prepare(int num_entries) {
+    // disable oom killer
+/*
+    std::string str = "echo -17 > /proc/" + std::to_string(getpid()) + "/oom_adj";
+    const char *command = str.c_str();
+    std::system(command);
+*/  
     char *key = (char *)calloc(1, FLAGS_key_size);
     char *value = (char *)calloc(1, FLAGS_value_size);
     for (int i = 0; i < num_entries; i++)
